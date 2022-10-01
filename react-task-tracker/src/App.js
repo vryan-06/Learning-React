@@ -4,6 +4,7 @@ import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 
 function App() {
+  const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -24,15 +25,17 @@ function App() {
       reminder: true,
     },
   ]);
-  
+
+
   //Creating function to add events after form submission
   const addTask = (task) => {
     // console.log(task)
-    const id = Math.floor(Math.random()*10000)+1
-
-    const newTask ={id, ...task}
+    const id = Math.floor(Math.random() * 10000) + 1
+    const newTask = { id, ...task }
     setTasks([...tasks, newTask])
   }
+
+
 
   // Creating function to delete events when 'X' is clicked
   const deleteTask = (id) => {
@@ -42,6 +45,8 @@ function App() {
     // This will filter i.e not show the task id whose 'X' was clicked
     setTasks(tasks.filter((task) => task.id != id));
   };
+
+
 
   // Function to change reminder class
   const toggleReminder = (id) => {
@@ -53,10 +58,14 @@ function App() {
     );
   };
 
+
+
+
   return (
     <div className="container">
-      <Header />
-      <AddTask onAdd={addTask}/>
+      <Header onAdd={() => setShowAddTask(!showAddTask)} 
+      showAddTask={showAddTask} />
+      {showAddTask && <AddTask onAdd={addTask} />}
       {tasks.length > 0 ? (
         <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
       ) : (
