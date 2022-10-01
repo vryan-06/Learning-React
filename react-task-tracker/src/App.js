@@ -24,10 +24,19 @@ function App() {
     },
 ]);
 
+// Creating function to delete events when 'X' is clicked
+const deleteTask = (id)=> {
+  // For checking purposes
+  console.log('delete',id) 
+
+  // This will filter i.e not show the task id whose 'X' was clicked
+  setTasks(tasks.filter((task)=>task.id!=id))
+}
+
   return (
     <div className="container">
       <Header />
-      <Tasks tasks={tasks}/>
+      <Tasks tasks={tasks} onDelete={deleteTask} />
     </div>
   );
 }
