@@ -43,7 +43,7 @@ function App() {
     console.log("delete", id);
 
     // This will filter i.e not show the task id whose 'X' was clicked
-    setTasks(tasks.filter((task) => task.id != id));
+    setTasks(tasks.filter((task) => task.id !== id));
   };
 
 
@@ -53,7 +53,7 @@ function App() {
     console.log("Toggled reminder for ID: ", id);
     setTasks(
       tasks.map((task) =>
-        task.id == id ? { ...task, reminder: !task.reminder } : task
+        task.id === id ? { ...task, reminder: !task.reminder } : task
       )
     );
   };
