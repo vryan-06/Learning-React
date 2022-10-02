@@ -1,31 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 
 function App() {
   const [showAddTask, setShowAddTask] = useState(false);
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      text: "Chess game",
-      day: "02/10/2022 2pm",
-      reminder: true,
-    },
-    {
-      id: 2,
-      text: "TCS assignment",
-      day: "04/10/2022 10am",
-      reminder: false,
-    },
-    {
-      id: 3,
-      text: "GDSC meet",
-      day: "01/10/2022 9pm",
-      reminder: true,
-    },
-  ]);
+  const [tasks, setTasks] = useState([]);
 
+
+  useEffect(()=>{
+    const getTasks = async() => {
+      const tasksFromServer = await fetchTasks()
+      setTasks(tasksFromServer)
+    }
+    
+    getTasks()
+  }, [])
+
+  
+  //Fetching tasks from the json server  file --> db.json
+  const fetchTasks = async()=>{
+    const res = await fetch('http://localhost:5000/tasks')
+    const data = await res.json()
+
+    console.log(data)
+
+    return
+  }
 
   //Creating function to add events after form submission
   const addTask = (task) => {
@@ -37,7 +38,11 @@ function App() {
 
 
   // Creating function to delete events when 'X' is clicked
-  const deleteTask = (id) => {
+  const deleteTask = async (id) => {
+    await fetch(`http://localhost:5000/tasks/${id}`,{
+      method: 'DELETE'
+    })
+
     // For checking purposes
     console.log("delete", id);
 
