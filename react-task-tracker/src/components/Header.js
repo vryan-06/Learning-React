@@ -12,7 +12,7 @@ const Header = ({ title, onAdd, showAdd }) => {
       {/* Importing Button Component rather than adding button here */}
       <Button
         color={showAdd ? "red" : "green"}
-        text={showAdd ? "Close" : "Add"}
+        text={showAdd ? "-" : "+"}
         onClick={onAdd}
       />
     </header>
